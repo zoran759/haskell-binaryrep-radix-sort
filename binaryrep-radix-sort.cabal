@@ -10,7 +10,7 @@ name:                binaryrep-radix-sort
 -- PVP summary:      +-+------- breaking API changes
 --                   | | +----- non-breaking API additions
 --                   | | | +--- code changes with no API change
-version:             1.0.1.0
+version:             1.0.1.1
 
 -- A short (one-line) description of the package.
 synopsis:            RadixSort of floats, ints and unsigned, based on their binary representation
@@ -46,6 +46,8 @@ cabal-version:       >= 1.10
 library
   Default-Language:    Haskell2010
   Exposed-modules:     Data.List.RadixSort.Base
+                       Data.List.RadixSort.Common
+                       Data.List.RadixSort.InternalLSD 
                        Data.List.RadixSort.HasIndexFloat
                        Data.List.RadixSort.HasIndexDouble
                        Data.List.RadixSort.HasIndexInt64
