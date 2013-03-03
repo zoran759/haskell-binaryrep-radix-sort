@@ -235,7 +235,7 @@ partSign poss negs (x:xs) = if isNeg x
                       
 sortFloats :: (RadixRep a) => [a] -> [a]
 sortFloats [] = []
-sortFloats list = sortedNegs `par` (sortedPoss `pseq` sortedNegs L.++ sortedPoss)
+sortFloats list = sortedNegs `par` (sortedPoss `pseq` (sortedNegs L.++ sortedPoss))
   where
     (poss, negs) = partSign [] [] list
     sortedPoss = radixSort poss
@@ -249,7 +249,7 @@ sortFloats list = sortedNegs `par` (sortedPoss `pseq` sortedNegs L.++ sortedPoss
 -- use this for Int<N> types
 sortInts :: (RadixRep a) => [a] -> [a]
 sortInts [] = []
-sortInts list = sortedNegs `par` (sortedPoss `pseq` sortedNegs L.++ sortedPoss)
+sortInts list = sortedNegs `par` (sortedPoss `pseq` (sortedNegs L.++ sortedPoss))
   where
     (poss, negs) = partSign [] [] list
     sortedPoss = radixSort poss
