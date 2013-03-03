@@ -209,7 +209,7 @@ radixSort list = assert (sizeOf (head list) `mod` bitsPerDigit == 0) $ runST $ d
     topDigit = (sizeOf $ L.head list) `div` bitsPerDigit - 1
     bitsPerDigit = let (_prefix, postfix) = L.splitAt 512 list in
                    if null postfix
-                      then 4  -- use tiny vectors
+                      then 4  -- use small vectors
                       else 8  -- use bigger vectors
         
 ------------------------------------------
