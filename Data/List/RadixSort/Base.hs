@@ -1,5 +1,5 @@
 {-# LANGUAGE PackageImports, FlexibleContexts, FlexibleInstances, UndecidableInstances, RankNTypes #-} -- , OverlappingInstances
-{- | Radix sort (O(k n) where k= #digits) of lists of floats (based on its IEEE754 representation) or Int<N> or Word<N> based on their representation
+{- | Least significant digit radix sort (O(k n) where k= #digits) of lists of floats (based on its IEEE754 representation) or Int<N> or Word<N> based on their representation
 
   Here we partition numbers by sign and sort both lists in parallel (you should link with -threaded)
 
@@ -7,9 +7,12 @@
 
   digit value queues are appended as difference lists (DList from package dlist, O(1) on append)
 
-  The instance for Int (machine word size) is not set up because it may have reserved bits (Haskell grants only 30 bits of numeric representation)
+  The instance for 'Int' (machine word size) must be used with reserve because it may have reserved bits for compiler use (The Haskell report grants only 30 bits of numeric representation)
+  . Check "The word size story." at <http://www.haskell.org/ghc/docs/7.2.2/html/libraries/ghc-prim-0.2.0.0/GHC-Prim.html#g:1>
 
   A quickcheck test-suite has been added.
+
+  See <http://en.wikipedia.org/wiki/Radix_sort>
 -}
 -- @author: Gabriel Riba Faura
 module Data.List.RadixSort.Base (
@@ -109,6 +112,11 @@ instance RadixRep Int64 where
   sizeOf _ = 64
   signedQual _ = Signed
 
+instance RadixRep Int where
+  toWordRep = fromIntegral
+  sizeOf x = bitSize (fromIntegral x ::Word)
+  signedQual _ = Signed
+  
 -------------------------------
 
 instance RadixRep Word8 where
@@ -131,6 +139,11 @@ instance RadixRep Word64 where
   sizeOf _ = 64
   signedQual _ = Unsigned
 
+instance RadixRep Word where
+  toWordRep = fromIntegral
+  sizeOf = bitSize
+  signedQual _ = Unsigned
+  
 ------------------------------------------
 
 wordGetDigitVal :: (Bits a, Integral a) => Int -> Int -> SignedQual -> Int -> a -> Int
