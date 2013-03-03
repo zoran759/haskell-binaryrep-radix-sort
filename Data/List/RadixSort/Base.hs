@@ -1,11 +1,15 @@
 {-# LANGUAGE PackageImports, FlexibleContexts, FlexibleInstances, UndecidableInstances, RankNTypes #-} -- , OverlappingInstances
-{- | Radix sort of lists of floats (based on its IEEE754 representation) or Int<N> based on their representation
+{- | Radix sort (O(k n) where k= #digits) of lists of floats (based on its IEEE754 representation) or Int<N> or Word<N> based on their representation
 
   Here we partition numbers by sign and sort both lists in parallel (you should link with -threaded)
 
   The digit size is set to 8 bits for lists > 512 elements, else 4, in order to save space when sorting small lists
 
   digit value queues are appended as difference lists (DList from package dlist, O(1) on append)
+
+  The instance for Int (machine word size) is not set up because it may have reserved bits (Haskell grants only 30 bits of numeric representation)
+
+  A quickcheck test-suite has been added.
 -}
 -- @author: Gabriel Riba Faura
 module Data.List.RadixSort.Base (
@@ -231,7 +235,7 @@ partSign poss negs (x:xs) = if isNeg x
 -- | sortFloats partitions between positive and negative and sort by binary repr. (exponent:mantissa) for each set in parallel,
 -- reversing the negatives list after radixSort.
 --
--- O(n), for each signed bag, plus sign partition, negatives reversing and reassembling
+-- O(k n) where k= #digits, for each signed bag, plus sign partition, negatives reversing and reassembling
 --
 -- use this for Floats and Doubles
                       
@@ -246,7 +250,7 @@ sortFloats list = sortedNegs `par` (sortedPoss `pseq` (sortedNegs L.++ sortedPos
 
 -- | sortInts partitions between positive and negative and sort each set in parallel
 -- 
--- O(n), for each signed bag, plus sign partition and reassembling
+-- O(k n) where k= #digits, for each signed bag, plus sign partition and reassembling
 -- 
 -- use this for Int<N> types
 sortInts :: (RadixRep a) => [a] -> [a]
@@ -257,7 +261,7 @@ sortInts list = sortedNegs `par` (sortedPoss `pseq` (sortedNegs L.++ sortedPoss)
     sortedPoss = radixSort poss
     sortedNegs = radixSort negs
 
--- | sortNats, O(n)
+-- | sortNats, O(k n) where k= #digits
 -- 
 -- use this for Word<N> types
 sortNats :: (RadixRep a) => [a] -> [a]
