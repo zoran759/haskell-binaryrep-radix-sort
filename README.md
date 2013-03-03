@@ -30,7 +30,7 @@ Sorting floats (Float, Double):
 
     main = floatExample
 
-Sorting integers (type Int<N>):
+Sorting integers (type IntN):
 
     {-# LANGUAGE PackageImports #-}
 
@@ -62,7 +62,7 @@ Sorting integers (type Int<N>):
 
     main = intExample
 
-Sorting naturals (type Word):
+Sorting naturals (type WordN):
 
     {-# LANGUAGE PackageImports #-}
 
