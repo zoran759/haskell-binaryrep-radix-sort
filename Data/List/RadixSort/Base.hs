@@ -4,6 +4,8 @@
   Here we partition numbers by sign and sort both lists in parallel (you should link with -threaded)
 
   The digit size is set to 8 bits for lists > 512 elements, else 4, in order to save space when sorting small lists
+
+  digit value queues are appended as difference lists (DList from package dlist)
 -}
 -- @author: Gabriel Riba Faura
 module Data.List.RadixSort.Base (
@@ -189,7 +191,7 @@ radixSort list = assert (sizeOf (head list) `mod` bitsPerDigit == 0) $ runST $ d
                 vecTo <- V.thaw emptyVecOfSeqs
                 
                 M.forM_ [0..topDigitVal] $ \digitVal -> do
-                    -- read vecFrom queues
+                    -- read vecFrom queue
                     s <- VM.read vecFrom digitVal
                     -- partition to vecTo queues
                     partListByDigit bitsPerDigit topDigit digit (F.toList s) vecTo
