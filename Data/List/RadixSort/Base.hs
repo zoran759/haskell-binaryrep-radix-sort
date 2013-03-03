@@ -5,7 +5,7 @@
 
   The digit size is set to 8 bits for lists > 512 elements, else 4, in order to save space when sorting small lists
 
-  digit value queues are appended as difference lists (DList from package dlist)
+  digit value queues are appended as difference lists (DList from package dlist, O(1) on append)
 -}
 -- @author: Gabriel Riba Faura
 module Data.List.RadixSort.Base (
