@@ -4,8 +4,8 @@ Sorting floats (Float, Double):
 
     {-# LANGUAGE PackageImports #-}
 
-    import Data.List.RadixSort.Base
-    import Data.List.RadixSort.HasIndexFloat
+    import Data.List.RadixSort.Base (sortFloats)
+    import Data.List.RadixSort.HasIndexFloat (HasIndexFloat(..))
     import Data.List as L
     import "random" System.Random
     import Control.Monad
@@ -34,8 +34,8 @@ Sorting integers (type IntN):
 
     {-# LANGUAGE PackageImports #-}
 
-    import Data.List.RadixSort.Base
-    import Data.List.RadixSort.HasIndexInt32
+    import Data.List.RadixSort.Base (sortInts)
+    import Data.List.RadixSort.HasIndexInt32 (HasIndexInt32(..))
     import Data.List as L
     import "random" System.Random
     import Control.Monad
@@ -66,8 +66,8 @@ Sorting naturals (type WordN):
 
     {-# LANGUAGE PackageImports #-}
 
-    import Data.List.RadixSort.Base
-    import Data.List.RadixSort.HasIndexWord32
+    import Data.List.RadixSort.Base (sortNats)
+    import Data.List.RadixSort.HasIndexWord32 (HasIndexWord32(..))
     import Data.List as L
     import "random" System.Random
     import Control.Monad
