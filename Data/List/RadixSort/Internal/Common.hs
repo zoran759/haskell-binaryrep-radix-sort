@@ -1,5 +1,5 @@
 {-# LANGUAGE RankNTypes, FlexibleContexts #-}
-module Data.List.RadixSort.Common (
+module Data.List.RadixSort.Internal.Common (
   RadixRep(..), SignedQual(..),
   floatToWord, doubleToWord,
   (.$)

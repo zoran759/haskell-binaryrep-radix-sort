@@ -1,7 +1,7 @@
-module Data.List.RadixSort.Util where
+module Data.List.RadixSort.Internal.Util where
 
 import Data.Bits
-import Data.List.RadixSort.Common
+import Data.List.RadixSort.Internal.Common
 import Data.Word (Word, Word8, Word16, Word32, Word64)
 import Control.Exception (assert)
 import Text.Printf (printf)

@@ -28,10 +28,10 @@ module Data.List.RadixSort.Base (
   RadixRep(..), SignedQual(..)
 ) where
 
-import Data.List.RadixSort.Common
-import Data.List.RadixSort.InternalMSD (msdRadixSort)
-import Data.List.RadixSort.InternalLSD (lsdRadixSort)
-import Data.List.RadixSort.Util (partBySign)
+import Data.List.RadixSort.Internal.Common
+import Data.List.RadixSort.Internal.MSD (msdRadixSort)
+import Data.List.RadixSort.Internal.LSD (lsdRadixSort)
+import Data.List.RadixSort.Internal.Util (partBySign)
 
 import qualified Data.List as L
 import "parallel" Control.Parallel (par, pseq)

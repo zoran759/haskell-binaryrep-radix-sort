@@ -61,6 +61,8 @@ main = do
         deepCheck ((\s -> checkOrdered $ msdSortInts s) :: [Int32] -> Bool)
         putStrLn "sorting by msd first [Int64]"
         deepCheck ((\s -> checkOrdered $ msdSortInts s) :: [Int64] -> Bool)
+        putStrLn "sorting by msd first [Int]"
+        deepCheck ((\s -> checkOrdered $ msdSortInts s) :: [Int] -> Bool)
 
         putStrLn "sorting by msd first [Word8]"
         deepCheck ((\s -> checkOrdered $ msdSortNats s) :: [Word8] -> Bool)
@@ -70,6 +72,8 @@ main = do
         deepCheck ((\s -> checkOrdered $ msdSortNats s) :: [Word32] -> Bool)
         putStrLn "sorting by msd first [Word64]"
         deepCheck ((\s -> checkOrdered $ msdSortNats s) :: [Word64] -> Bool)
+        putStrLn "sorting by msd first [Word]"
+        deepCheck ((\s -> checkOrdered $ msdSortNats s) :: [Word] -> Bool)
         
         putStrLn "\n"
         
@@ -90,6 +94,8 @@ main = do
         deepCheck ((\s -> checkOrdered $ lsdSortInts s) :: [Int32] -> Bool)
         putStrLn "sorting by lsd first [Int64]"
         deepCheck ((\s -> checkOrdered $ lsdSortInts s) :: [Int64] -> Bool)
+        putStrLn "sorting by lsd first [Int]"
+        deepCheck ((\s -> checkOrdered $ lsdSortInts s) :: [Int] -> Bool)
 
         putStrLn "sorting by lsd first [Word8]"
         deepCheck ((\s -> checkOrdered $ lsdSortNats s) :: [Word8] -> Bool)
@@ -99,3 +105,5 @@ main = do
         deepCheck ((\s -> checkOrdered $ lsdSortNats s) :: [Word32] -> Bool)
         putStrLn "sorting by lsd first [Word64]"
         deepCheck ((\s -> checkOrdered $ lsdSortNats s) :: [Word64] -> Bool)
+        putStrLn "sorting by lsd first [Word]"
+        deepCheck ((\s -> checkOrdered $ lsdSortNats s) :: [Word] -> Bool)
