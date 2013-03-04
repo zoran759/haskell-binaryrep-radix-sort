@@ -10,7 +10,7 @@ name:                binaryrep-radix-sort
 -- PVP summary:      +-+------- breaking API changes
 --                   | | +----- non-breaking API additions
 --                   | | | +--- code changes with no API change
-version:             1.1.0.1
+version:             1.2.0.0
 
 -- A short (one-line) description of the package.
 synopsis:            RadixSort of floats, ints and unsigned, based on their binary representation
@@ -56,7 +56,6 @@ library
                        Data.List.RadixSort.HasIndexWord32
                        Data.List.RadixSort.HasIndexWord16
                        Data.List.RadixSort.HasIndexWord8
-                       Data.List.RadixSort.HasIndexInt
                        Data.List.RadixSort.HasIndexWord
 
                        Data.List.RadixSort.Internal.Common
