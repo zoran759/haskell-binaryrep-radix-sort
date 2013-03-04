@@ -11,7 +11,7 @@
 
   digit value queues are appended as difference lists (DList from package dlist, O(1) on append)
 
-  The instance for 'Int' (machine word size) must be used with reserve because it may have reserved bits for compiler use.
+  The instance for 'Int' (machine word size) is not supported because it may have reserved bits for compiler use.
   Check "The word size story." at <http://www.haskell.org/ghc/docs/7.2.2/html/libraries/ghc-prim-0.2.0.0/GHC-Prim.html#g:1>
 
   A quickcheck test-suite has been added.
