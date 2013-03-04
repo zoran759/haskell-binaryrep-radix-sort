@@ -1,6 +1,6 @@
 {-# LANGUAGE PackageImports #-}
--- | Least significant digit radix sort
-module Data.List.RadixSort.InternalLSD (lsdRadixSort) where
+-- | Most significant digit radix sort
+module Data.List.RadixSort.InternalMSD (msdRadixSort) where
 
 import Data.List.RadixSort.Common
 import Data.List.RadixSort.Util
@@ -22,8 +22,8 @@ import Text.Printf (printf)
 
 import GHC.ST (runST, ST)
 import Control.Exception (assert)
-import qualified Control.Monad as M
-import Data.STRef.Strict (newSTRef, readSTRef, writeSTRef)
+-- import qualified Control.Monad as M
+import "parallel" Control.Parallel.Strategies
 
 
 
@@ -56,42 +56,44 @@ collectVecToDList vec n dl =
         new_accum_dl = dln `D.append` dl
         dln = dlFromSeq $ vec V.! n
 
-
 ------------------------------------------
 
-lsdRadixSort :: (RadixRep a) => [a] -> [a]
-lsdRadixSort [] = []
-lsdRadixSort [x] = [x]
-lsdRadixSort list = assert (sizeOf (head list) `mod` bitsPerDigit == 0) $ runST $ do
-        vecIni <- V.thaw emptyVecOfSeqs
-        -- partition by digit 0
-        partListByDigit bitsPerDigit topDigit 0 list vecIni
-        refVecFrom <- newSTRef vecIni
+sortByDigit :: (RadixRep a) => Int -> Int -> [a] -> DList a
+sortByDigit _bitsPerDigit _digit [] = D.empty
+sortByDigit _bitsPerDigit _digit [x] = D.singleton x
 
-        M.when (topDigit > 0) $
-           M.forM_ [1..topDigit] $ \digit -> do
-                -- sort by digit
-                vecFrom <- readSTRef refVecFrom
-                vecTo <- V.thaw emptyVecOfSeqs
-
-                M.forM_ [0..topDigitVal] $ \digitVal -> do
-                    -- read vecFrom queue
-                    s <- VM.read vecFrom digitVal
-                    -- partition to vecTo queues
-                    partListByDigit bitsPerDigit topDigit digit (F.toList s) vecTo
-
-                writeSTRef refVecFrom vecTo
-
-        lastDigitSortedMVec <- readSTRef refVecFrom
-        lastDigitSortedVec <- V.freeze lastDigitSortedMVec
-        let dlist = collectVecToDList lastDigitSortedVec topDigitVal D.empty
-        return $ D.toList dlist
+sortByDigit bitsPerDigit digit list = runST $ do
+        mvec <- V.thaw emptyVecOfSeqs
+        -- partition by digit
+        partListByDigit bitsPerDigit topDigit digit list mvec
+        vec <- V.freeze mvec
+        if digit == 0
+           then do
+                return $ collectVecToDList vec topDigitVal D.empty
+                
+           else do
+                let dlists = (V.toList vec) .$ map F.toList
+                                      .$ parMap rseq (sortByDigit bitsPerDigit (digit-1))
+                return $ D.concat dlists                      
   where
-
     emptyVecOfSeqs = V.replicate (topDigitVal+1) S.empty
     topDigitVal = 2 ^ bitsPerDigit -1
+    topDigit = (sizeOf $ L.head list) `div` bitsPerDigit - 1
+    
+------------------------------------------
+       
+msdRadixSort :: (RadixRep a) => [a] -> [a]
+msdRadixSort [] = []
+msdRadixSort [x] = [x]
+msdRadixSort list = assert (sizeOf (head list) `mod` bitsPerDigit == 0) $
+   ( list .$ sortByDigit bitsPerDigit topDigit
+          .$ D.toList
+   )
+  where
     topDigit = (sizeOf $ L.head list) `div` bitsPerDigit - 1
     bitsPerDigit = let (_prefix, postfix) = L.splitAt 512 list in
                    if null postfix
                       then 4  -- use small vectors
                       else 8  -- use bigger vectors
+          
+        

@@ -18,13 +18,16 @@
 -}
 -- @author: Gabriel Riba Faura
 module Data.List.RadixSort.Base (
-  sortInts, sortFloats, sortNats,
+  msdSortInts, msdSortFloats, msdSortNats,
+  lsdSortInts, lsdSortFloats, lsdSortNats,
   floatToWord, doubleToWord,
   RadixRep(..), SignedQual(..)
 ) where
 
 import Data.List.RadixSort.Common
-import Data.List.RadixSort.InternalLSD (radixSort)
+import Data.List.RadixSort.InternalMSD (msdRadixSort)
+import Data.List.RadixSort.InternalLSD (lsdRadixSort)
+import Data.List.RadixSort.Util (partBySign)
 
 import qualified Data.List as L
 import "parallel" Control.Parallel (par, pseq)
@@ -40,33 +43,54 @@ import "parallel" Control.Parallel (par, pseq)
 --
 -- use this for Floats and Doubles
                       
-sortFloats :: (RadixRep a) => [a] -> [a]
-sortFloats [] = []
-sortFloats list = sortedNegs `par` (sortedPoss `pseq` (sortedNegs L.++ sortedPoss))
+msdSortFloats :: (RadixRep a) => [a] -> [a]
+msdSortFloats [] = []
+msdSortFloats list = sortedNegs `par` (sortedPoss `pseq` (sortedNegs L.++ sortedPoss))
   where
     (poss, negs) = partBySign [] [] list
-    sortedPoss = radixSort poss
-    sortedNegs = negs .$ radixSort 
+    sortedPoss = msdRadixSort poss
+    sortedNegs = negs .$ msdRadixSort
                       .$ L.reverse
 
+
+lsdSortFloats :: (RadixRep a) => [a] -> [a]
+lsdSortFloats [] = []
+lsdSortFloats list = sortedNegs `par` (sortedPoss `pseq` (sortedNegs L.++ sortedPoss))
+  where
+    (poss, negs) = partBySign [] [] list
+    sortedPoss = lsdRadixSort poss
+    sortedNegs = negs .$ lsdRadixSort
+                      .$ L.reverse
+                      
 -- | sortInts partitions between positive and negative and sort each set in parallel
 -- 
 -- O(k n) where k= #digits, for each signed bag, plus sign partition and reassembling
 -- 
 -- use this for Int<N> types
-sortInts :: (RadixRep a) => [a] -> [a]
-sortInts [] = []
-sortInts list = sortedNegs `par` (sortedPoss `pseq` (sortedNegs L.++ sortedPoss))
+msdSortInts :: (RadixRep a) => [a] -> [a]
+msdSortInts [] = []
+msdSortInts list = sortedNegs `par` (sortedPoss `pseq` (sortedNegs L.++ sortedPoss))
   where
     (poss, negs) = partBySign [] [] list
-    sortedPoss = radixSort poss
-    sortedNegs = radixSort negs
+    sortedPoss = msdRadixSort poss
+    sortedNegs = msdRadixSort negs
+
+lsdSortInts :: (RadixRep a) => [a] -> [a]
+lsdSortInts [] = []
+lsdSortInts list = sortedNegs `par` (sortedPoss `pseq` (sortedNegs L.++ sortedPoss))
+  where
+    (poss, negs) = partBySign [] [] list
+    sortedPoss = lsdRadixSort poss
+    sortedNegs = lsdRadixSort negs
+    
 
 -- | sortNats, O(k n) where k= #digits
 -- 
 -- use this for Word<N> types
-sortNats :: (RadixRep a) => [a] -> [a]
-sortNats [] = []
-sortNats list = radixSort list
+msdSortNats :: (RadixRep a) => [a] -> [a]
+msdSortNats [] = []
+msdSortNats list = msdRadixSort list
 
-        
+lsdSortNats :: (RadixRep a) => [a] -> [a]
+lsdSortNats [] = []
+lsdSortNats list = lsdRadixSort list

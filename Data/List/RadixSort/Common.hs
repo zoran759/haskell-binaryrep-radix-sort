@@ -5,12 +5,11 @@ import Data.Array.ST (newArray, readArray, MArray, STUArray)
 import Data.Array.Unsafe (castSTUArray)
 import GHC.ST (runST, ST)
 
-import Data.Bits
 import Data.Int (Int8, Int16, Int32, Int64)
 import Data.Word (Word, Word8, Word16, Word32, Word64)
-import Text.Printf (printf)
+import Data.Bits
 
-import Control.Exception (assert)
+-- import Control.Exception (assert)
 
 (.$) :: forall b c. b -> (b -> c) -> c
 (.$) = flip ($)
@@ -111,7 +110,7 @@ instance RadixRep Word where
   signedQual _ = Unsigned
 
 ------------------------------------------
-
+{-
 wordGetDigitVal :: (Bits a, Integral a) => Int -> Int -> SignedQual -> Int -> a -> Int
 wordGetDigitVal bitsPerDigit topDigit signed digit bits =
       assert (digit >= 0 && digit <= topDigit) $ fromIntegral digitVal
@@ -140,5 +139,5 @@ partBySign poss negs (x:xs) = if isNeg x
                         16 -> testBit (toWordRep y :: Word16) 15
                         8 ->  testBit (toWordRep y :: Word8) 7
                         other -> error $ printf "size %d not supported!" other
-
+                        -}
 

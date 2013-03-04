@@ -47,7 +47,6 @@ library
   Default-Language:    Haskell2010
   Exposed-modules:     Data.List.RadixSort.Base
                        Data.List.RadixSort.Common
-                       Data.List.RadixSort.InternalLSD 
                        Data.List.RadixSort.HasIndexFloat
                        Data.List.RadixSort.HasIndexDouble
                        Data.List.RadixSort.HasIndexInt64
@@ -60,6 +59,11 @@ library
                        Data.List.RadixSort.HasIndexWord8
                        Data.List.RadixSort.HasIndexInt
                        Data.List.RadixSort.HasIndexWord
+
+  Other-modules:
+                       Data.List.RadixSort.InternalLSD
+                       Data.List.RadixSort.InternalMSD
+                       Data.List.RadixSort.Util
 
   Ghc-Options:         -Wall -O2 -fno-warn-orphans
 
