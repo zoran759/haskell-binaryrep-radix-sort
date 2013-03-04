@@ -77,8 +77,9 @@ Test-Suite test-binaryrep-radix-sort
   Type:                 exitcode-stdio-1.0
   Default-Language:     Haskell2010
   Hs-Source-Dirs:       test
-  Ghc-Options:          -Wall
+  Ghc-Options:          -Wall 
   Main-Is:              test.hs
+  -- Test-module:          Test
   Build-Depends:        base
                       , QuickCheck >= 2.4
                       , random >= 1.0.1
