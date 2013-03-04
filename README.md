@@ -1,10 +1,13 @@
 # Radix sort based on binary representation - how-to
 
+With msd prefix uses parallel (shorter time, higher space) Most significant digit radix sort
+With lsd prefix uses (shorter space, higher time) Least significant digit radix sort
+
 Sorting floats (Float, Double):
 
     {-# LANGUAGE PackageImports #-}
 
-    import Data.List.RadixSort.Base (sortFloats)
+    import Data.List.RadixSort.Base (msdSortFloats)
     import Data.List.RadixSort.HasIndexFloat (HasIndexFloat(..))
     import Data.List as L
     import "random" System.Random
@@ -23,10 +26,10 @@ Sorting floats (Float, Double):
         print llistaF1
 
         putStrLn "\n"
-        print $ sortFloats llistaF1
+        print $ msdSortFloats llistaF1
 
         putStrLn "\n"
-        print $ sortFloats llistaF2
+        print $ msdSortFloats llistaF2
 
     main = floatExample
 
@@ -34,7 +37,7 @@ Sorting integers (type IntN):
 
     {-# LANGUAGE PackageImports #-}
 
-    import Data.List.RadixSort.Base (sortInts)
+    import Data.List.RadixSort.Base (msdSortInts)
     import Data.List.RadixSort.HasIndexInt32 (HasIndexInt32(..))
     import Data.List as L
     import "random" System.Random
@@ -54,10 +57,10 @@ Sorting integers (type IntN):
         print llistaI1
 
         putStrLn "\n"
-        print $ sortInts llistaI1
+        print $ msdSortInts llistaI1
 
         putStrLn "\n"
-        print $ sortInts llistaI2
+        print $ msdSortInts llistaI2
 
 
     main = intExample
@@ -66,7 +69,7 @@ Sorting naturals (type WordN):
 
     {-# LANGUAGE PackageImports #-}
 
-    import Data.List.RadixSort.Base (sortNats)
+    import Data.List.RadixSort.Base (msdSortNats)
     import Data.List.RadixSort.HasIndexWord32 (HasIndexWord32(..))
     import Data.List as L
     import "random" System.Random
@@ -85,10 +88,10 @@ Sorting naturals (type WordN):
 
         print llistaN1
         putStrLn "\n"
-        print $ sortNats llistaN1
+        print $ msdSortNats llistaN1
 
         putStrLn "\n"
-        print $ sortNats llistaN2
+        print $ msdSortNats llistaN2
 
     main = wordExample
 
