@@ -14,23 +14,23 @@ Sorting floats (Float, Double):
     import "random" System.Random
     import Control.Monad
 
-    data FRec = FRec {campF:: Float} deriving (Eq, Show)
+    data FRec = FRec {fieldF:: Float} deriving (Eq, Show)
 
     instance HasIndexFloat FRec where
-        indexFloat = campF
+        indexFloat = fieldF
 
     floatExample = do
 
-        llistaF1 <- replicateM 10 $ getStdRandom (randomR ((-100)::Float,100))
-        let llistaF2 = L.map FRec llistaF1
+        listF1 <- replicateM 10 $ getStdRandom (randomR ((-100)::Float,100))
+        let listF2 = L.map FRec listF1
 
-        print llistaF1
-
-        putStrLn "\n"
-        print $ msdSortFloats llistaF1
+        print listF1
 
         putStrLn "\n"
-        print $ msdSortFloats llistaF2
+        print $ msdSortFloats listF1
+
+        putStrLn "\n"
+        print $ msdSortFloats listF2
 
     main = floatExample
 
@@ -45,23 +45,23 @@ Sorting integers (type IntN):
     import Control.Monad
     import Data.Int
 
-    data IRec = IRec {campI:: Int32} deriving (Eq, Show)
+    data IRec = IRec {fieldI:: Int32} deriving (Eq, Show)
 
     instance HasIndexInt32 IRec where
-        indexInt32 = campI
+        indexInt32 = fieldI
 
     intExample = do
 
-        llistaI1 <- replicateM 10 $ getStdRandom (randomR ((-100)::Int32,100))
-        let llistaI2 = L.map IRec llistaI1
+        listI1 <- replicateM 10 $ getStdRandom (randomR ((-100)::Int32,100))
+        let listI2 = L.map IRec listI1
 
-        print llistaI1
-
-        putStrLn "\n"
-        print $ msdSortInts llistaI1
+        print listI1
 
         putStrLn "\n"
-        print $ msdSortInts llistaI2
+        print $ msdSortInts listI1
+
+        putStrLn "\n"
+        print $ msdSortInts listI2
 
 
     main = intExample
@@ -77,22 +77,22 @@ Sorting naturals (type WordN):
     import Control.Monad
     import Data.Word
 
-    data WRec = WRec {campW:: Word32} deriving (Eq, Show)
+    data WRec = WRec {fieldW:: Word32} deriving (Eq, Show)
 
     instance HasIndexWord32 WRec where
-        indexWord32 = campW
+        indexWord32 = fieldW
 
     wordExample = do
 
-        llistaN1 <- replicateM 10 $ getStdRandom (randomR (0::Word32,100))
-        let llistaN2 = L.map WRec llistaN1
+        listN1 <- replicateM 10 $ getStdRandom (randomR (0::Word32,100))
+        let listN2 = L.map WRec listN1
 
-        print llistaN1
+        print listN1
         putStrLn "\n"
-        print $ msdSortNats llistaN1
+        print $ msdSortNats listN1
 
         putStrLn "\n"
-        print $ msdSortNats llistaN2
+        print $ msdSortNats listN2
 
     main = wordExample
 
