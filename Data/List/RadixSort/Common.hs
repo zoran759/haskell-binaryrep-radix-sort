@@ -1,5 +1,9 @@
 {-# LANGUAGE RankNTypes, FlexibleContexts #-}
-module Data.List.RadixSort.Common where
+module Data.List.RadixSort.Common (
+  RadixRep(..), SignedQual(..),
+  floatToWord, doubleToWord,
+  (.$)
+) where
 
 import Data.Array.ST (newArray, readArray, MArray, STUArray)
 import Data.Array.Unsafe (castSTUArray)
