@@ -1,7 +1,8 @@
 # Radix sort based on binary representation - how-to
 
-With msd prefix uses parallel (shorter time, higher space) Most significant digit radix sort
-With lsd prefix uses (shorter space, higher time) Least significant digit radix sort
+With msd prefix you have parallel (shorter time, higher space) Most significant digit radix sort
+
+With lsd prefix you have (shorter space, higher time) Least significant digit radix sort
 
 Sorting floats (Float, Double):
 
