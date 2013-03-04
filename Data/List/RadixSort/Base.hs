@@ -1,7 +1,9 @@
 {-# LANGUAGE PackageImports #-}
 
 -- {-# LANGUAGE PackageImports, FlexibleContexts, FlexibleInstances, UndecidableInstances, RankNTypes #-} -- , OverlappingInstances
-{- | Least significant digit radix sort (O(k n) where k= #digits) of lists of floats (based on its IEEE754 representation) or Int<N> or Word<N> based on their representation
+{- | Radix sort (O(k n) where k= #digits) of lists of floats (based on its IEEE754 representation) or Int<N> or Word<N> based on their representation
+
+  The lsd prefix is for Least significant digit radix sort, while msd is for the parallelized Most significant digit one.
 
   Here we partition numbers by sign and sort both lists in parallel (you should link with -threaded)
 
@@ -13,6 +15,8 @@
   Check "The word size story." at <http://www.haskell.org/ghc/docs/7.2.2/html/libraries/ghc-prim-0.2.0.0/GHC-Prim.html#g:1>
 
   A quickcheck test-suite has been added.
+
+  Used (.$) = flip ($)
 
   See <http://en.wikipedia.org/wiki/Radix_sort>
 -}
