@@ -1,5 +1,10 @@
 {-# LANGUAGE PackageImports #-}
-module Data.List.RadixSort.Internal.Util where
+module Data.List.RadixSort.Internal.Util (
+  partBySign,
+  calcDigitSize,
+  partListByDigit,
+  collectVecToDList
+) where
 
 import Data.Bits
 import Data.List.RadixSort.Internal.Common
@@ -22,19 +27,6 @@ import qualified "vector" Data.Vector.Mutable as VM
 import GHC.ST (ST)
 
 ------------------------------------------
-
-wordGetDigitVal :: (Bits a, Integral a) => Int -> Int -> SignedQual -> Int -> a -> Int
-wordGetDigitVal bitsPerDigit topDigit signed digit bits =
-      assert (digit >= 0 && digit <= topDigit) $ fromIntegral digitVal
-    where
-      bitsToShift = digit * bitsPerDigit
-      mask = if digit == topDigit && signed == Signed
-              then shiftL (fromIntegral digitMaskSignExcl) bitsToShift
-              else shiftL (fromIntegral digitMask) bitsToShift
-
-      digitVal = shiftR (bits .&. mask) bitsToShift
-      digitMask = bit bitsPerDigit -1 :: Word
-      digitMaskSignExcl = (bit (bitsPerDigit-1) -1) :: Word   -- sign excluded
 
 ------------------------------------------
 
@@ -61,16 +53,31 @@ partListByDigit bitsPerDigit topDigit digit (x:xs) vec = do
         VM.write vec digitVal (s S.|> x)
         partListByDigit bitsPerDigit topDigit digit xs vec
         return ()
-      where
-        digitVal = case sizeOf x of
+  where
+    digitVal = case sizeOf x of
                         64 -> wordGetDigitVal bitsPerDigit topDigit signedQ digit $ (toWordRep x :: Word64)
                         32 -> wordGetDigitVal bitsPerDigit topDigit signedQ digit $ (toWordRep x :: Word32)
                         16 -> wordGetDigitVal bitsPerDigit topDigit signedQ digit $ (toWordRep x :: Word16)
                         8 -> wordGetDigitVal bitsPerDigit topDigit signedQ digit $ (toWordRep x :: Word8)
                         other -> error $ printf "size %d not supported!" other
 
-        signedQ = signedQual x
+    signedQ = signedQual x
 
+------------------------------------------
+
+wordGetDigitVal :: (Bits a, Integral a) => Int -> Int -> SignedQual -> Int -> a -> Int
+wordGetDigitVal bitsPerDigit topDigit signed digit bits =
+      assert (digit >= 0 && digit <= topDigit) $ fromIntegral digitVal
+    where
+      bitsToShift = digit * bitsPerDigit
+      mask = if digit == topDigit && signed == Signed
+              then shiftL (fromIntegral digitMaskSignExcl) bitsToShift
+              else shiftL (fromIntegral digitMask) bitsToShift
+
+      digitVal = shiftR (bits .&. mask) bitsToShift
+      digitMask = bit bitsPerDigit -1 :: Word
+      digitMaskSignExcl = (bit (bitsPerDigit-1) -1) :: Word   -- sign excluded
+        
 ------------------------------------------
 
 collectVecToDList :: Vector (Seq a) -> Int -> DList a -> DList a
