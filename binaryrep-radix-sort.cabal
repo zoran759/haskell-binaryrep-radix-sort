@@ -20,7 +20,7 @@ description:         RadixSort of floats, ints and unsigned, based on their bina
                      (Includes QuickCheck test-suite)
 
 -- The license under which the package is released.
-license:             BSD2
+license:             BSD3
 
 -- The file containing the license text.
 license-file:        LICENSE
