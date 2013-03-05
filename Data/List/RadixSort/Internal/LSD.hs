@@ -5,6 +5,7 @@ module Data.List.RadixSort.Internal.LSD (lsdRadixSort) where
 import Data.List.RadixSort.Internal.Common
 import Data.List.RadixSort.Internal.Util
 
+import Data.Bits
 import qualified Data.List as L
 import qualified Data.Sequence as S
 import qualified Data.Foldable as F
@@ -49,6 +50,6 @@ lsdRadixSort list = assert (sizeOf (head list) `mod` bitsPerDigit == 0) $ runST 
   where
 
     emptyVecOfSeqs = V.replicate (topDigitVal+1) S.empty
-    topDigitVal = 2 ^ bitsPerDigit -1
+    topDigitVal = bit bitsPerDigit -1
     topDigit = (sizeOf $ L.head list) `div` bitsPerDigit - 1
     bitsPerDigit = calcDigitSize list
