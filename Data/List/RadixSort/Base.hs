@@ -47,6 +47,7 @@ import "parallel" Control.Parallel (par, pseq)
                       
 msdSortFloats :: (RadixRep a) => [a] -> [a]
 msdSortFloats [] = []
+msdSortFloats [x] = [x]
 msdSortFloats list = sortedNegs `par` (sortedPoss `pseq` (sortedNegs L.++ sortedPoss))
   where
     (poss, negs) = partBySign [] [] list
@@ -57,6 +58,7 @@ msdSortFloats list = sortedNegs `par` (sortedPoss `pseq` (sortedNegs L.++ sorted
 
 lsdSortFloats :: (RadixRep a) => [a] -> [a]
 lsdSortFloats [] = []
+lsdSortFloats [x] = [x]
 lsdSortFloats list = sortedNegs `par` (sortedPoss `pseq` (sortedNegs L.++ sortedPoss))
   where
     (poss, negs) = partBySign [] [] list
@@ -71,6 +73,7 @@ lsdSortFloats list = sortedNegs `par` (sortedPoss `pseq` (sortedNegs L.++ sorted
 -- use this for Int<N> types
 msdSortInts :: (RadixRep a) => [a] -> [a]
 msdSortInts [] = []
+msdSortInts [x] = [x]
 msdSortInts list = sortedNegs `par` (sortedPoss `pseq` (sortedNegs L.++ sortedPoss))
   where
     (poss, negs) = partBySign [] [] list
@@ -79,6 +82,7 @@ msdSortInts list = sortedNegs `par` (sortedPoss `pseq` (sortedNegs L.++ sortedPo
 
 lsdSortInts :: (RadixRep a) => [a] -> [a]
 lsdSortInts [] = []
+lsdSortInts [x] = [x]
 lsdSortInts list = sortedNegs `par` (sortedPoss `pseq` (sortedNegs L.++ sortedPoss))
   where
     (poss, negs) = partBySign [] [] list
@@ -91,8 +95,10 @@ lsdSortInts list = sortedNegs `par` (sortedPoss `pseq` (sortedNegs L.++ sortedPo
 -- use this for Word<N> types
 msdSortNats :: (RadixRep a) => [a] -> [a]
 msdSortNats [] = []
+msdSortNats [x] = [x]
 msdSortNats list = msdRadixSort list
 
 lsdSortNats :: (RadixRep a) => [a] -> [a]
 lsdSortNats [] = []
+lsdSortNats [x] = [x]
 lsdSortNats list = lsdRadixSort list
