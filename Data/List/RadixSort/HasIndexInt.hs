@@ -3,7 +3,6 @@
 module Data.List.RadixSort.HasIndexInt (HasIndexInt(..)) where
 
 import Data.List.RadixSort.Base (RadixRep(..))
-import Data.Int
 
 -- | class to implement
 class HasIndexInt t where
