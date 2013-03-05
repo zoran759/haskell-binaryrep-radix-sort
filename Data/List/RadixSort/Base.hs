@@ -16,11 +16,11 @@
 
   A quickcheck test-suite has been added.
 
-  Internally uses (.$) = flip ($)
-
   See <http://en.wikipedia.org/wiki/Radix_sort>
 -}
 -- @author: Gabriel Riba Faura
+-- Internally uses (.$) = flip ($)
+
 module Data.List.RadixSort.Base (
   msdSortInts, msdSortFloats, msdSortNats,
   lsdSortInts, lsdSortFloats, lsdSortNats,
