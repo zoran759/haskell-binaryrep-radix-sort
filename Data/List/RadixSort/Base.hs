@@ -15,8 +15,6 @@
   Check The word size story at <http://www.haskell.org/ghc/docs/7.2.2/html/libraries/ghc-prim-0.2.0.0/GHC-Prim.html#g:1>
 
   A quickcheck test-suite has been added.
-
-  See <http://en.wikipedia.org/wiki/Radix_sort>
 -}
 -- @author: Gabriel Riba Faura
 -- Internally uses (.$) = flip ($)
