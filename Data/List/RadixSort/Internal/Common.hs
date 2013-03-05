@@ -80,12 +80,14 @@ instance RadixRep Int64 where
   toWordRep = fromIntegral
   sizeOf _ = 64
   signedQual _ = Signed
+  
+{- Int representation may have bits reserved in compilers other than GHC
+  -}
 
 instance RadixRep Int where
   toWordRep = fromIntegral
   sizeOf x = bitSize (fromIntegral x ::Word)
   signedQual _ = Signed
-
 -------------------------------
 
 instance RadixRep Word8 where
