@@ -102,7 +102,7 @@ calcDigitSize list =
   let (_prefix, postfix1) = L.splitAt 16 list
   in if null postfix1
      then 2  -- use shorter vectors
-     else let (_prefix, postfix2) = L.splitAt 512 list
+     else let (_prefix, postfix2) = L.splitAt 500 postfix1
           in if null postfix2
                 then 4  -- use small vectors
                 else 8  -- use bigger vectors
