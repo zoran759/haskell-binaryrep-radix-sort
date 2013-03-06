@@ -1,6 +1,6 @@
 {-# LANGUAGE RankNTypes, FlexibleContexts #-}
 module Data.List.RadixSort.Internal.Common (
-  RadixRep(..), SignedQual(..), SortData(..),
+  RadixRep(..), SignedQual(..), SortInfo(..),
   floatToWord, doubleToWord,
   (.$)
 ) where
@@ -37,7 +37,7 @@ cast x = newArray (0 :: Int, 0) x >>= castSTUArray >>= flip readArray 0
 
 data SignedQual = Signed | Unsigned deriving (Eq, Show)
 
-data SortData = SortData {sdDigitSize::Int, sdTopDigit::Int, sdTopDigitVal::Int}
+data SortInfo = SortInfo {siDigitSize::Int, siTopDigit::Int, siTopDigitVal::Int}
 
 -- | class to instanciate for a type to be used in radix sorts
 class RadixRep t where

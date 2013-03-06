@@ -20,14 +20,14 @@ import "parallel" Control.Parallel.Strategies
 
 ------------------------------------------
 
-sortByDigit :: (RadixRep a) => SortData -> Int -> [a] -> DList a
-sortByDigit _sortData _digit [] = D.empty
-sortByDigit _sortData _digit [x] = D.singleton x
+sortByDigit :: (RadixRep a) => SortInfo -> Int -> [a] -> DList a
+sortByDigit _sortInfo _digit [] = D.empty
+sortByDigit _sortInfo _digit [x] = D.singleton x
 
-sortByDigit sortData digit list = runST $ do
+sortByDigit sortInfo digit list = runST $ do
         mvec <- V.thaw emptyVecOfSeqs
         -- partition by digit
-        partListByDigit sortData digit mvec list
+        partListByDigit sortInfo digit mvec list
         vec <- V.freeze mvec
         if digit == 0
            then do
@@ -36,12 +36,12 @@ sortByDigit sortData digit list = runST $ do
            else do
                 let dlists = vec .$ V.toList
                                  .$ map F.toList
-                                 .$ parMap rseq (sortByDigit sortData (digit-1))
+                                 .$ parMap rseq (sortByDigit sortInfo (digit-1))
                                  
                 return $ D.concat dlists                      
   where
     emptyVecOfSeqs = V.replicate (topDigitVal+1) S.empty
-    topDigitVal = sdTopDigitVal sortData
+    topDigitVal = sortInfo .$ siTopDigitVal
     
 ------------------------------------------
        
@@ -49,13 +49,13 @@ msdRadixSort :: (RadixRep a) => [a] -> [a]
 msdRadixSort [] = []
 msdRadixSort [x] = [x]
 msdRadixSort list = assert (sizeOf (head list) `mod` bitsPerDigit == 0) $
-   ( list .$ sortByDigit sortData topDigit
+   ( list .$ sortByDigit sortInfo topDigit
           .$ D.toList
    )
   where
-    sortData = SortData {sdDigitSize = bitsPerDigit,
-                         sdTopDigit = topDigit,
-                         sdTopDigitVal = topDigitVal
+    sortInfo = SortInfo {siDigitSize = bitsPerDigit,
+                         siTopDigit = topDigit,
+                         siTopDigitVal = topDigitVal
                          }
     topDigit = (sizeOf $ L.head list) `div` bitsPerDigit - 1
     topDigitVal = bit bitsPerDigit -1
