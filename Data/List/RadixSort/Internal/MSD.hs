@@ -34,8 +34,10 @@ sortByDigit sortData digit list = runST $ do
                 return $ collectVecToDList vec topDigitVal D.empty
                 
            else do
-                let dlists = (V.toList vec) .$ map F.toList
-                                      .$ parMap rseq (sortByDigit sortData (digit-1))
+                let dlists = vec .$ V.toList
+                                 .$ map F.toList
+                                 .$ parMap rseq (sortByDigit sortData (digit-1))
+                                 
                 return $ D.concat dlists                      
   where
     emptyVecOfSeqs = V.replicate (topDigitVal+1) S.empty
