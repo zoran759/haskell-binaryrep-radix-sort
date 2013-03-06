@@ -46,12 +46,12 @@ partBySign poss negs (x:xs) = if isNeg x
                         
 ------------------------------------------
 
-partListByDigit :: (RadixRep a) => SortData -> MVector s (Seq a) -> Int -> [a] -> ST s ()
-partListByDigit _sortData _vec _digit []  = return ()
-partListByDigit sortData vec digit (x:xs) = do
+partListByDigit :: (RadixRep a) => SortData -> Int -> MVector s (Seq a) -> [a] -> ST s ()
+partListByDigit _sortData _digit _vec []  = return ()
+partListByDigit sortData digit vec (x:xs) = do
         s <- VM.read vec digitVal
         VM.write vec digitVal (s S.|> x)
-        partListByDigit sortData vec digit xs
+        partListByDigit sortData digit vec xs
         return ()
   where
     digitVal = case sizeOf x of
