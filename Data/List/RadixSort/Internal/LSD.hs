@@ -26,7 +26,7 @@ lsdRadixSort [x] = [x]
 lsdRadixSort list = assert (sizeOf (head list) `mod` bitsPerDigit == 0) $ runST $ do
         vecIni <- V.thaw emptyVecOfSeqs
         -- partition by digit 0
-        partListByDigit sortData 0 list vecIni
+        partListByDigit sortData vecIni 0 list 
         refVecFrom <- newSTRef vecIni
 
         M.when (topDigit > 0) $
@@ -39,7 +39,7 @@ lsdRadixSort list = assert (sizeOf (head list) `mod` bitsPerDigit == 0) $ runST 
                     -- read vecFrom queue
                     s <- VM.read vecFrom digitVal
                     -- partition to vecTo queues
-                    partListByDigit sortData digit (F.toList s) vecTo
+                    partListByDigit sortData vecTo digit (F.toList s) 
 
                 writeSTRef refVecFrom vecTo
 

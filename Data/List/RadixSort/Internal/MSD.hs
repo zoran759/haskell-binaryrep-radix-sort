@@ -27,7 +27,7 @@ sortByDigit _sortData _digit [x] = D.singleton x
 sortByDigit sortData digit list = runST $ do
         mvec <- V.thaw emptyVecOfSeqs
         -- partition by digit
-        partListByDigit sortData digit list mvec
+        partListByDigit sortData mvec digit list
         vec <- V.freeze mvec
         if digit == 0
            then do
