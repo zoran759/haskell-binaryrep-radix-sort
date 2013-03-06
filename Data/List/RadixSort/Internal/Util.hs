@@ -37,11 +37,12 @@ partBySign poss negs (x:xs) = if isNeg x
                                then partBySign poss (x:negs) xs
                                else partBySign (x:poss) negs xs
   where
-        isNeg y = case sizeOf y of
-                        64 -> testBit (toWordRep y :: Word64) 63
-                        32 -> testBit (toWordRep y :: Word32) 31
-                        16 -> testBit (toWordRep y :: Word16) 15
-                        8 ->  testBit (toWordRep y :: Word8) 7
+        isNeg y = let s = sizeOf y
+                  in case s of
+                        64 -> testBit (toWordRep y :: Word64) (s-1)
+                        32 -> testBit (toWordRep y :: Word32) (s-1)
+                        16 -> testBit (toWordRep y :: Word16) (s-1)
+                        8 ->  testBit (toWordRep y :: Word8) (s-1)
                         other -> error $ printf "size %d not supported!" other
                         
 ------------------------------------------
