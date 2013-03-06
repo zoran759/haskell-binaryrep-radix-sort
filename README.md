@@ -19,6 +19,9 @@ Sorting floats (Float, Double):
     instance HasIndexFloat FRec where
         indexFloat = fieldF
 
+    instance Ord FRec where
+        compare = comparing indexFloat
+
     floatExample = do
 
         listF1 <- replicateM 10 $ getStdRandom (randomR ((-100)::Float,100))
@@ -49,6 +52,9 @@ Sorting integers (type IntN):
 
     instance HasIndexInt32 IRec where
         indexInt32 = fieldI
+
+    instance Ord IRec where
+        compare = comparing indexInt32
 
     intExample = do
 
@@ -81,6 +87,9 @@ Sorting naturals (type WordN):
 
     instance HasIndexWord32 WRec where
         indexWord32 = fieldW
+
+    instance Ord WRec where
+        compare = comparing indexWord32
 
     wordExample = do
 
