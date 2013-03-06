@@ -20,14 +20,14 @@ import "parallel" Control.Parallel.Strategies
 
 ------------------------------------------
 
-sortByDigit :: (RadixRep a) => Int -> Int -> [a] -> DList a
-sortByDigit _bitsPerDigit _digit [] = D.empty
-sortByDigit _bitsPerDigit _digit [x] = D.singleton x
+sortByDigit :: (RadixRep a) => SortData -> Int -> [a] -> DList a
+sortByDigit _sortData _digit [] = D.empty
+sortByDigit _sortData _digit [x] = D.singleton x
 
-sortByDigit bitsPerDigit digit list = runST $ do
+sortByDigit sortData digit list = runST $ do
         mvec <- V.thaw emptyVecOfSeqs
         -- partition by digit
-        partListByDigit bitsPerDigit topDigit digit list mvec
+        partListByDigit sortData digit list mvec
         vec <- V.freeze mvec
         if digit == 0
            then do
@@ -35,12 +35,11 @@ sortByDigit bitsPerDigit digit list = runST $ do
                 
            else do
                 let dlists = (V.toList vec) .$ map F.toList
-                                      .$ parMap rseq (sortByDigit bitsPerDigit (digit-1))
+                                      .$ parMap rseq (sortByDigit sortData (digit-1))
                 return $ D.concat dlists                      
   where
     emptyVecOfSeqs = V.replicate (topDigitVal+1) S.empty
-    topDigitVal = bit bitsPerDigit -1
-    topDigit = (sizeOf $ L.head list) `div` bitsPerDigit - 1
+    topDigitVal = sdTopDigitVal sortData
     
 ------------------------------------------
        
@@ -48,11 +47,16 @@ msdRadixSort :: (RadixRep a) => [a] -> [a]
 msdRadixSort [] = []
 msdRadixSort [x] = [x]
 msdRadixSort list = assert (sizeOf (head list) `mod` bitsPerDigit == 0) $
-   ( list .$ sortByDigit bitsPerDigit topDigit
+   ( list .$ sortByDigit sortData topDigit
           .$ D.toList
    )
   where
+    sortData = SortData {sdDigitSize = bitsPerDigit,
+                         sdTopDigit = topDigit,
+                         sdTopDigitVal = topDigitVal
+                         }
     topDigit = (sizeOf $ L.head list) `div` bitsPerDigit - 1
+    topDigitVal = bit bitsPerDigit -1
     bitsPerDigit = calcDigitSize list
           
         
