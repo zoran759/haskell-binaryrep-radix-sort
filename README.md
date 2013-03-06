@@ -24,6 +24,7 @@ Sorting floats (Float, Double) or records with a floating-point index:
     import Data.List as L
     import "random" System.Random
     import Control.Monad
+    import Data.Ord
 
     data FRec = FRec {fieldF:: Float} deriving (Eq, Show)
 
@@ -58,6 +59,7 @@ Sorting integers (type IntN) or records with an IntN index:
     import "random" System.Random
     import Control.Monad
     import Data.Int
+    import Data.Ord
 
     data IRec = IRec {fieldI:: Int32} deriving (Eq, Show)
 
@@ -93,6 +95,7 @@ Sorting naturals (type WordN) or records with a WordN index:
     import "random" System.Random
     import Control.Monad
     import Data.Word
+    import Data.Ord
 
     data WRec = WRec {fieldW:: Word32} deriving (Eq, Show)
 
