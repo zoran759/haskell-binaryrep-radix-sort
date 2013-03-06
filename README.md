@@ -4,7 +4,7 @@ With msd prefix you have parallel (shorter time, higher space) Most significant 
 
 With lsd prefix you have (shorter space, higher time) Least significant digit radix sort
 
-The flag --enable-tests passes the QuickCheck Test-suite (test/test.hs)
+The flag --enable-tests builds the QuickCheck test-suite at (test/test.hs)
 
     cabal install --enable-tests
 
@@ -14,6 +14,7 @@ or
     cabal build
     cabal test
     cabal haddock
+    ...
 
 Sorting floats (Float, Double) or records with a floating-point index:
 
