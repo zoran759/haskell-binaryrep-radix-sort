@@ -15,7 +15,7 @@ or
     cabal test
     cabal haddock
 
-Sorting floats (Float, Double):
+Sorting floats (Float, Double) or records with a floating-point index:
 
     {-# LANGUAGE PackageImports #-}
 
@@ -48,7 +48,7 @@ Sorting floats (Float, Double):
 
     main = floatExample
 
-Sorting integers (type IntN):
+Sorting integers (type IntN) or records with an IntN index:
 
     {-# LANGUAGE PackageImports #-}
 
@@ -83,7 +83,7 @@ Sorting integers (type IntN):
 
     main = intExample
 
-Sorting naturals (type WordN):
+Sorting naturals (type WordN) or records with a WordN index:
 
     {-# LANGUAGE PackageImports #-}
 
