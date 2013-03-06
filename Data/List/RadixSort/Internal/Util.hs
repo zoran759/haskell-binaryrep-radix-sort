@@ -70,12 +70,13 @@ wordGetDigitVal :: (Bits a, Integral a) => SortInfo -> SignedQual -> Int -> a ->
 wordGetDigitVal sortInfo signed digit bits =
       assert (digit >= 0 && digit <= topDigit) $ fromIntegral digitVal
     where
-      bitsToShift = digit * bitsPerDigit
+      digitVal = shiftR (bits .&. mask) bitsToShift
+      
       mask = if digit == topDigit && signed == Signed
               then shiftL (fromIntegral digitMaskSignExcl) bitsToShift
               else shiftL (fromIntegral digitMask) bitsToShift
-
-      digitVal = shiftR (bits .&. mask) bitsToShift
+              
+      bitsToShift = digit * bitsPerDigit
       digitMask = bit bitsPerDigit -1 :: Word
       digitMaskSignExcl = (bit (bitsPerDigit-1) -1) :: Word   -- sign excluded
       bitsPerDigit = sortInfo .$ siDigitSize
