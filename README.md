@@ -17,6 +17,7 @@ or
 
 Sorting floats (Float, Double) or records with a floating-point index:
 
+```haskell
     {-# LANGUAGE PackageImports #-}
 
     import Data.List.RadixSort.Base (msdSortFloats)
@@ -48,9 +49,11 @@ Sorting floats (Float, Double) or records with a floating-point index:
         print $ msdSortFloats listF2
 
     main = floatExample
+```
 
 Sorting integers (type IntN) or records with an IntN index:
 
+```haskell
     {-# LANGUAGE PackageImports #-}
 
     import Data.List.RadixSort.Base (msdSortInts)
@@ -84,9 +87,11 @@ Sorting integers (type IntN) or records with an IntN index:
 
 
     main = intExample
+```
 
 Sorting naturals (type WordN) or records with a WordN index:
 
+```haskell
     {-# LANGUAGE PackageImports #-}
 
     import Data.List.RadixSort.Base (msdSortNats)
