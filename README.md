@@ -1,8 +1,8 @@
 ## Radix sort of numbers and numerically indexed data types, based on binary representation of primitive types
 
-With msd prefix you have parallel (shorter time, higher space) Most significant digit radix sort
+With msd prefix you have parallel Most significant digit radix sort
 
-With lsd prefix you have (shorter space, higher time) Least significant digit radix sort
+With lsd prefix you have Least significant digit radix sort
 
 The flag --enable-tests builds the QuickCheck test-suite at (test/test.hs)
 
