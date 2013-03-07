@@ -11,7 +11,8 @@
 
   digit value queues are appended as difference lists (DList from package dlist, O(1) on append)
 
-  The instance for 'Int' (machine word size) is not portable because in compilers other than GHC it may have reserved bits for compiler use.
+  The instance for 'Int' (machine word size) is not portable because it may have reserved bits for compiler use.
+  The type Word may be restricted to the same number of bits as Int.
   Check The word size story at <http://www.haskell.org/ghc/docs/7.2.2/html/libraries/ghc-prim-0.2.0.0/GHC-Prim.html#g:1>
 
   A quickcheck test-suite has been added.
