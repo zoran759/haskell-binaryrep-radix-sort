@@ -1,7 +1,7 @@
 {-# LANGUAGE RankNTypes, FlexibleContexts #-}
 module Data.List.RadixSort.Internal.Common (
   RadixRep(..), SignedQual(..), SortInfo(..),
-  floatToWord, doubleToWord,
+  -- floatToWord, doubleToWord,
   (.$)
 ) where
 

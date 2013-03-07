@@ -1,4 +1,4 @@
-# Radix sort based on binary representation - how-to
+## Radix sort of numbers and numerically indexed data types, based on binary representation of primitive types
 
 With msd prefix you have parallel (shorter time, higher space) Most significant digit radix sort
 

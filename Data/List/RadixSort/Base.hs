@@ -22,8 +22,7 @@
 module Data.List.RadixSort.Base (
   msdSortInts, msdSortFloats, msdSortNats,
   lsdSortInts, lsdSortFloats, lsdSortNats,
-  floatToWord, doubleToWord,
-  RadixRep(..), SignedQual(..)
+  RadixRep(..)
 ) where
 
 import Data.List.RadixSort.Internal.Common
